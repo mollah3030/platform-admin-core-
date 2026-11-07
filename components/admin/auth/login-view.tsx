@@ -56,10 +56,10 @@ export function AdminLoginView() {
         {/* Brand Logo Header */}
         <div className="flex flex-col items-center text-center space-y-2.5">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 text-white font-black shadow-xl shadow-rose-950/50">
-            <span className="text-sm font-sans tracking-tight">BI</span>
+            <span className="text-sm font-sans tracking-tight">OY</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-white font-sans">
-            Brothers IT Solution
+            Oivaly
           </h1>
           <p className="text-xs text-[#7D7E8B]">
             Platform Administration &amp; Multi-Tenant Control Portal
