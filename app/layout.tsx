@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Platform Admin Panel | Multi-Tenant Marketplace",
-  description: "Enterprise Platform Admin Portal for Multi-Tenant Marketplace SaaS",
+  title: "Platform Admin Panel | Oivaly",
+  description: "Enterprise Platform Admin Portal for Oivaly",
 };
 
 export default function RootLayout({

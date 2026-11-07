@@ -138,7 +138,7 @@ export function Sidebar({
             {!collapsed && (
               <div className="flex flex-col overflow-hidden">
                 <span className="text-[13px] font-bold text-white tracking-tight truncate leading-tight">
-                  Company Name
+                  Oivaly
                 </span>
                 <span className="text-[9px] font-semibold text-[#6E6F7C] uppercase tracking-wider font-mono">
                   PLATFORM WORKSPACE
@@ -276,7 +276,7 @@ export function MobileSidebar() {
             </div>
             <div className="flex flex-col text-left">
               <span className="text-sm font-bold text-white">
-                Company Name
+                Oivaly
               </span>
               <span className="text-[10px] text-[#6E6F7C] uppercase font-mono font-semibold">
                 PLATFORM WORKSPACE
