@@ -28,9 +28,11 @@ import {
   Pencil,
   Sparkles,
   Globe,
+  Eye,
 } from "lucide-react";
 import { EditStoreDialog } from "./edit-store-dialog";
 import { ChangeStoreStatusDialog } from "./change-store-status-dialog";
+import { ProductDetailsDialog } from "./product-details-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -95,6 +97,10 @@ export function StoreDetailsView({ id }: { id: string }) {
   // Edit & Status Change state
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+
+  // Product quick-view details popup state
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [productDetailsOpen, setProductDetailsOpen] = useState(false);
 
   const getErrorMessage = (err: any, fallback: string) => {
     const msg = err.response?.data?.message;
@@ -719,13 +725,21 @@ export function StoreDetailsView({ id }: { id: string }) {
                       <TableHead className="text-xs text-[#6F707E]">VAT</TableHead>
                       <TableHead className="text-xs text-[#6F707E]">Variants</TableHead>
                       <TableHead className="text-xs text-[#6F707E]">Created</TableHead>
+                      <TableHead className="text-xs text-[#6F707E] text-right">Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {storeProducts.map((p: Product) => (
-                      <TableRow key={p.id} className="border-b border-[#1A1A22] hover:bg-[#16161D]/60">
+                      <TableRow
+                        key={p.id}
+                        onClick={() => {
+                          setSelectedProduct(p);
+                          setProductDetailsOpen(true);
+                        }}
+                        className="border-b border-[#1A1A22] hover:bg-[#181822] cursor-pointer transition-colors group"
+                      >
                         <TableCell>
-                          <div className="font-medium text-white text-sm">{p.name}</div>
+                          <div className="font-medium text-white text-sm group-hover:text-[#E11D48] transition-colors">{p.name}</div>
                           <div className="text-[11px] text-[#6F707E] font-mono">SKU: {p.sku}</div>
                         </TableCell>
                         <TableCell>
@@ -753,6 +767,22 @@ export function StoreDetailsView({ id }: { id: string }) {
                         </TableCell>
                         <TableCell className="text-xs text-[#7D7E8B]">
                           {formatDate(p.createdAt)}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 px-2.5 text-xs text-[#8E8F99] group-hover:text-white hover:bg-[#22222C] transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProduct(p);
+                              setProductDetailsOpen(true);
+                            }}
+                          >
+                            <Eye className="size-3.5 mr-1.5 text-[#E11D48]" />
+                            <span>View Details</span>
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -1049,6 +1079,18 @@ export function StoreDetailsView({ id }: { id: string }) {
         open={statusDialogOpen}
         onOpenChange={setStatusDialogOpen}
         onSuccess={() => refetch()}
+      />
+
+      {/* Product Quick-View Details Dialog */}
+      <ProductDetailsDialog
+        productId={selectedProduct?.id}
+        initialProduct={selectedProduct}
+        open={productDetailsOpen}
+        onOpenChange={setProductDetailsOpen}
+        onProductUpdated={() => {
+          refetch();
+          queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
+        }}
       />
     </div>
   );

@@ -11,7 +11,9 @@ import {
   RotateCw,
   Tag,
   DollarSign,
+  Eye,
 } from "lucide-react";
+import { ProductDetailsDialog } from "@/components/admin/stores/product-details-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -52,6 +54,8 @@ export function ProductsListView() {
   const queryClient = useQueryClient();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [productDialogOpen, setProductDialogOpen] = useState(false);
 
   const { data, isLoading, refetch } = useProducts({
     page: 1,
@@ -190,10 +194,17 @@ export function ProductsListView() {
               </TableHeader>
               <TableBody>
                 {filteredProducts.map((p) => (
-                  <TableRow key={p.id} className="border-b border-[#1A1A22] hover:bg-[#16161D]/60 transition-colors">
+                  <TableRow
+                    key={p.id}
+                    onClick={() => {
+                      setSelectedProduct(p);
+                      setProductDialogOpen(true);
+                    }}
+                    className="border-b border-[#1A1A22] hover:bg-[#16161D]/80 cursor-pointer transition-colors group"
+                  >
                     <TableCell>
                       <div className="flex flex-col">
-                        <span className="font-semibold text-sm text-white">
+                        <span className="font-semibold text-sm text-white group-hover:text-[#E11D48] transition-colors">
                           {p.name}
                         </span>
                         <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
@@ -248,6 +259,17 @@ export function ProductsListView() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48 bg-[#14141A] border-[#22222C] text-[#E0E0E6]">
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedProduct(p);
+                              setProductDialogOpen(true);
+                            }}
+                            className="cursor-pointer text-white hover:bg-white/[0.08]"
+                          >
+                            <Eye className="mr-2 h-4 w-4 text-[#E11D48]" />
+                            View Full Details
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="bg-[#22222C]" />
                           <DropdownMenuLabel className="text-xs text-[#7D7E8B]">
                             Moderation Actions
                           </DropdownMenuLabel>
@@ -292,6 +314,18 @@ export function ProductsListView() {
           </div>
         )}
       </div>
+
+      {/* Product Quick-View Details Dialog */}
+      <ProductDetailsDialog
+        productId={selectedProduct?.id}
+        initialProduct={selectedProduct}
+        open={productDialogOpen}
+        onOpenChange={setProductDialogOpen}
+        onProductUpdated={() => {
+          refetch();
+          queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
+        }}
+      />
     </div>
   );
 }
