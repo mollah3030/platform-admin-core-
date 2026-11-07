@@ -1,0 +1,68 @@
+{
+  "nodes": [
+    {
+      "id": "readme_platform_pannel_app",
+      "label": "Platform Panel Next.js Application",
+      "file_type": "concept",
+      "source_file": "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\README.md",
+      "source_location": "L1-L8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_nextjs_agent_rules",
+      "label": "Next.js Agent Guidelines & Rules",
+      "file_type": "document",
+      "source_file": "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\AGENTS.md",
+      "source_location": "L1-L9",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "claude_agent_rules_ref",
+      "label": "Claude Agent Integration Rule Reference",
+      "file_type": "document",
+      "source_file": "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\CLAUDE.md",
+      "source_location": "L1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "claude_agent_rules_ref",
+      "target": "agents_nextjs_agent_rules",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform_pannel_app",
+      "target": "agents_nextjs_agent_rules",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 500,
+  "output_tokens": 300,
+  "coverage": {
+    "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\README.md": 36,
+    "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\AGENTS.md": 9,
+    "D:\\BrothersITSolution\\Client-Frontend\\plartform-pannel\\CLAUDE.md": 1
+  }
+}
+
